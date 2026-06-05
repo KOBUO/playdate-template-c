@@ -1,0 +1,7 @@
+name=Game Template
+author=kobuo
+description=A Playdate game template in C (scenes, i18n, save, audio).
+bundleID=com.kobuo.gametemplate
+version=1.0
+buildNumber=1
+imagePath=SystemAssets

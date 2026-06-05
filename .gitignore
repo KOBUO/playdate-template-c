@@ -1,0 +1,12 @@
+# build artifacts
+build/
+build-device/
+*.pdx
+Source/pdex.*
+
+# macOS
+.DS_Store
+
+# editor
+.vscode/
+.idea/

@@ -1,0 +1,27 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(arm-none-eabi-gcc --version)",
+      "Bash(brew --version)",
+      "Bash(xcode-select -p)",
+      "Bash(clang --version)",
+      "Bash(brew install *)",
+      "Read(//Users/kobuo/**)",
+      "Bash(echo 'export PLAYDATE_SDK_PATH=\"$HOME/Developer/PlaydateSDK\"')",
+      "Bash(open -a '/Users/kobuo/Developer/PlaydateSDK/bin/Playdate Simulator.app' /Users/kobuo/workspace/playdate/myfirstgame.pdx)",
+      "Bash([ -f \"$F\" ])",
+      "Bash(python3 -c \"import PIL; print\\('Pillow', PIL.__version__\\)\")",
+      "Read(//System/Library/Fonts/**)",
+      "Read(//private/tmp/jpfont/**)",
+      "Bash(curl -fsSL -o PixelMplus.zip \"https://github.com/itouhiro/PixelMplus/releases/download/v1.0.0/PixelMplus-20130602.zip\")",
+      "Bash(python3 -)",
+      "Bash(cp /tmp/jpfont/PixelMplus-20130602/PixelMplus12-Regular.ttf assets/fonts-src/)",
+      "Bash(cp /tmp/jpfont/PixelMplus-20130602/mplus_bitmap_fonts/LICENSE_E assets/fonts-src/PixelMplus-LICENSE_E.txt)",
+      "Bash(cp /tmp/jpfont/PixelMplus-20130602/README.txt assets/fonts-src/PixelMplus-README.txt)",
+      "Bash(python3 tools/gen_jp_font.py)",
+      "Bash(python3 *)",
+      "Bash([ -f \"$P\" ])",
+      "Read(//private/var/folders/97/250m9jln2ss9kmp5_1phq43m0000gn/T/TemporaryItems/NSIRD_screencaptureui_zltPHb/**)"
+    ]
+  }
+}
