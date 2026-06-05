@@ -43,29 +43,30 @@ def draw_device(ox, oy):
     # 画面（横長）
     d.rectangle([ox + 12, oy + 12, ox + bw - 12, oy + 58], outline=BLACK, width=2)
     # 十字キー（左下）
-    cx, cy, t, L = ox + 34, oy + 96, 6, 15
+    cx, cy, t, L = ox + 32, oy + 99, 6, 15
     plus = [(cx-t,cy-L),(cx+t,cy-L),(cx+t,cy-t),(cx+L,cy-t),(cx+L,cy+t),
             (cx+t,cy+t),(cx+t,cy+L),(cx-t,cy+L),(cx-t,cy+t),(cx-L,cy+t),
             (cx-L,cy-t),(cx-t,cy-t)]
     d.polygon(plus, outline=BLACK)
-    # A / B ボタン（右下）
-    for bx, by, ch in [(ox+86, oy+102, "B"), (ox+106, oy+88, "A")]:
-        d.ellipse([bx-9, by-9, bx+9, by+9], outline=BLACK, width=2)
-        lw = int(d.textlength(ch, font=font))
-        d.text((bx - lw // 2, by - 6), ch, font=font, fill=BLACK)
-    # クランク：細いシャフト + 太い握り。継ぎ目の不具合を避けるため
-    # 「黒で塗る → 内側を白で抜く」で1本の綺麗な輪郭にする（内部に変な線が出ない）。
-    # 太さの段差でシャフトと握りが視覚的に分かれて見える。
-    xc = ox + bw + 12
-    d.line([ox + bw - 1, oy + 27, xc - 4, oy + 27], fill=BLACK, width=3)   # 上ヒンジ
-    sh = [xc - 4, oy + 22, xc + 4, oy + 54]      # シャフト(細)
-    gr = [xc - 8, oy + 48, xc + 8, oy + 98]      # 握り(太)
+    # A / B ボタン（右側・横並び・同じ高さ。公式は文字なしの丸）
+    for bx in (ox + 84, ox + 106):
+        d.ellipse([bx - 9, oy + 80, bx + 9, oy + 98], outline=BLACK, width=2)
+    # 四隅のネジ
+    for sx, sy in [(ox+11, oy+11), (ox+bw-11, oy+11), (ox+11, oy+bh-11), (ox+bw-11, oy+bh-11)]:
+        d.ellipse([sx-3, sy-3, sx+3, sy+3], outline=BLACK, width=1)
+        d.ellipse([sx-1, sy-1, sx+1, sy+1], fill=BLACK)
+    # スピーカー（本体右上の細いスリット。公式にある小ディテール）
+    d.rounded_rectangle([ox + bw - 11, oy + 18, ox + bw - 7, oy + 44], radius=2, outline=BLACK, width=2)
+    # クランク（公式準拠）：本体から少し離れた位置に「縦長アーム＋上端の横向き取っ手」のL字。
+    # 「黒で塗る → 内側を白で抜く」で1本の綺麗な輪郭にする（継ぎ目の不具合を出さない）。
+    arm = [ox + bw + 12, oy + 36, ox + bw + 20, oy + 100]   # アーム（縦長カプセル）
+    hnd = [ox + bw + 14, oy + 24, ox + bw + 38, oy + 44]    # 取っ手（横長の箱・上端、右へ突き出す）
     # 1) 黒シルエット
-    d.rounded_rectangle(sh, radius=3, fill=BLACK)
-    d.rounded_rectangle(gr, radius=7, fill=BLACK)
+    d.rounded_rectangle(arm, radius=4, fill=BLACK)
+    d.rounded_rectangle(hnd, radius=4, fill=BLACK)
     # 2) 内側を白で抜く（白同士を重ねて継ぎ目を消す）
-    d.rounded_rectangle([sh[0] + 2, sh[1] + 2, sh[2] - 2, sh[3] - 2], radius=2, fill=255)
-    d.rounded_rectangle([gr[0] + 2, gr[1] + 2, gr[2] - 2, gr[3] - 2], radius=5, fill=255)
+    d.rounded_rectangle([arm[0] + 2, arm[1] + 2, arm[2] - 2, arm[3] - 2], radius=2, fill=255)
+    d.rounded_rectangle([hnd[0] + 2, hnd[1] + 2, hnd[2] - 2, hnd[3] - 2], radius=2, fill=255)
 
 draw_device((W - 128) // 2 - 7, 80)   # クランク分すこし左寄せして中央に見せる
 
