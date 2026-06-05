@@ -3,6 +3,7 @@
 #include "input.h"
 #include "dialogue.h"
 #include <string.h>
+#include <stdio.h>
 
 // 会話ウィンドウ（オーバーレイ）：本編の上に重ねて表示する。
 //  - タイプライター表示（1文字ずつ）
@@ -32,6 +33,11 @@ typedef struct {
 	int   total_cp;               // 現在行の総コードポイント数
 	int   reveal;                 // 表示済みコードポイント数
 	float timer;
+	const char* name;             // 話者名（NULL可）
+	const char** choices;         // 選択肢（NULL可）
+	int   choice_count;
+	int   choosing;               // 選択肢モードか
+	int   sel;                    // 選択中の選択肢
 } DlgState;
 
 // --- UTF-8 ユーティリティ ---
@@ -95,6 +101,11 @@ static void enter(Scene* self, void* arg)
 	DialogueScript* sc = arg;
 	s->lines = sc ? sc->lines : NULL;
 	s->count = sc ? sc->count : 0;
+	s->name = sc ? sc->name : NULL;
+	s->choices = sc ? sc->choices : NULL;
+	s->choice_count = sc ? sc->choice_count : 0;
+	s->choosing = 0;
+	s->sel = 0;
 	s->cur = 0;
 	self->state = s;
 	if (s->count > 0)
@@ -106,6 +117,15 @@ static void enter(Scene* self, void* arg)
 static void update(Scene* self, float dt)
 {
 	DlgState* s = self->state;
+
+	// 選択肢モード
+	if (s->choosing) {
+		if (btn_pressed(kButtonUp))   s->sel = (s->sel - 1 + s->choice_count) % s->choice_count;
+		if (btn_pressed(kButtonDown)) s->sel = (s->sel + 1) % s->choice_count;
+		if (btn_pressed(kButtonA))    scene_pop(INT_TO_ARG(s->sel));   // 選んだindexを返す
+		if (btn_pressed(kButtonB))    scene_pop(NULL);                 // キャンセル(=0)
+		return;
+	}
 
 	// タイプライター進行
 	if (s->reveal < s->total_cp) {
@@ -126,6 +146,8 @@ static void update(Scene* self, float dt)
 		} else if (s->cur + 1 < s->count) {
 			s->cur++;                          // 次の行
 			layout(s);
+		} else if (s->choice_count > 0) {
+			s->choosing = 1;                   // 最後の行 → 選択肢へ
 		} else {
 			scene_pop(NULL);                   // 最後 → 閉じる
 		}
@@ -136,9 +158,28 @@ static void draw(Scene* self)
 {
 	DlgState* s = self->state;
 
+	// 名前ボックス（あれば枠の左上に）
+	if (s->name) {
+		int nw = text_width(s->name) + 16;
+		pd->graphics->fillRect(BOX_X, BOX_Y - 22, nw, 22, kColorWhite);
+		pd->graphics->drawRect(BOX_X, BOX_Y - 22, nw, 22, kColorBlack);
+		draw_text(s->name, BOX_X + 8, BOX_Y - 18);
+	}
+
 	// 枠
 	pd->graphics->fillRect(BOX_X, BOX_Y, BOX_W, BOX_H, kColorWhite);
 	pd->graphics->drawRect(BOX_X, BOX_Y, BOX_W, BOX_H, kColorBlack);
+
+	// 選択肢モード：選択肢を一覧表示
+	if (s->choosing) {
+		for (int i = 0; i < s->choice_count; i++) {
+			int y = BOX_Y + PAD + i * LINE_H;
+			char line[ROW_BUF];
+			snprintf(line, sizeof(line), "%s %s", i == s->sel ? ">" : " ", s->choices[i]);
+			draw_text(line, BOX_X + PAD, y);
+		}
+		return;
+	}
 
 	// 本文（reveal 文字まで）
 	int remaining = s->reveal;

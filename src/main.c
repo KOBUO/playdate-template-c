@@ -22,6 +22,7 @@ int eventHandler(PlaydateAPI* playdate, PDSystemEvent event, uint32_t arg)
 		i18n_init();
 		audio_init();
 		save_load();      // 保存済みの設定/進行を読み込む（言語もここで反映）
+		audio_refresh();  // 保存済みのサウンド設定を BGM に反映
 
 		pd->display->setRefreshRate(30);
 
@@ -33,6 +34,7 @@ int eventHandler(PlaydateAPI* playdate, PDSystemEvent event, uint32_t arg)
 		scene_register(SCENE_STAGE_MOVE, scene_stage_move);
 		scene_register(SCENE_STAGE_CRANK, scene_stage_crank);
 		scene_register(SCENE_STAGE_TILT, scene_stage_tilt);
+		scene_register(SCENE_STAGE_TILEMAP, scene_stage_tilemap);
 		scene_register(SCENE_SETTINGS, scene_settings);
 		scene_register(SCENE_CREDITS, scene_credits);
 		scene_register(SCENE_DIALOGUE, scene_dialogue);

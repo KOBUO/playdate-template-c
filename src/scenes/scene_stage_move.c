@@ -27,6 +27,7 @@ typedef struct {
 } St;
 
 static const char*    s_intro[1];
+static const char*    s_choices[2];
 static DialogueScript s_dlg;
 
 static void enter(Scene* self, void* arg)
@@ -37,10 +38,22 @@ static void enter(Scene* self, void* arg)
 	s->x = 30; s->y = 150; s->ft = 0; s->frame = 0; s->facing = 0; s->won = 0; s->wt = 0;
 	s->stage = ARG_TO_INT(arg);
 	self->state = s;
-	// 導入：操作説明を会話で
-	s_intro[0] = tr(STR_HINT_MOVE);
+	// 導入：名前ボックス＋選択肢つき会話（会話ウィンドウの全機能デモ）
+	s_intro[0]   = tr(STR_HINT_MOVE);
+	s_choices[0] = tr(STR_GO);
+	s_choices[1] = tr(STR_CANCEL);
 	s_dlg.lines = s_intro; s_dlg.count = 1;
+	s_dlg.name = tr(STR_NAME_GUIDE);
+	s_dlg.choices = s_choices; s_dlg.choice_count = 2;
 	scene_push(SCENE_DIALOGUE, &s_dlg);
+}
+
+// 導入会話が pop した時。Cancel(=1) ならステージ選択へ戻る。
+static void resume(Scene* self, void* result)
+{
+	(void)self;
+	if (ARG_TO_INT(result) == 1)
+		scene_switch(SCENE_STAGE_SELECT, NULL, TRANSITION_FADE);
 }
 
 static void update(Scene* self, float dt)
@@ -105,5 +118,5 @@ static void build_menu(Scene* self) { (void)self; sysmenu_add_settings(); sysmen
 
 Scene scene_stage_move(void)
 {
-	return (Scene){ .enter = enter, .update = update, .draw = draw, .leave = leave, .build_menu = build_menu };
+	return (Scene){ .enter = enter, .update = update, .draw = draw, .resume = resume, .leave = leave, .build_menu = build_menu };
 }

@@ -46,7 +46,7 @@ static void update(Scene* self, float dt)
 
 	switch (s->selected) {
 		case ITEM_SOUND:
-			if (change) { g_sound_on = !g_sound_on; audio_play(SFX_CONFIRM); save_store(); }
+			if (change) { g_sound_on = !g_sound_on; audio_refresh(); audio_play(SFX_CONFIRM); save_store(); }
 			break;
 		case ITEM_LANGUAGE:
 			if (change) { cycle_language(); audio_play(SFX_CONFIRM); save_store(); }

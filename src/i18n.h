@@ -24,11 +24,16 @@ typedef enum {
 	STR_STAGE_MOVE,     // ステージ名（操作別ミニゲーム）
 	STR_STAGE_CRANK,
 	STR_STAGE_TILT,
+	STR_STAGE_TILEMAP,
 	STR_HINT_MOVE,      // 各ステージの操作説明（導入会話＆画面）
 	STR_HINT_CRANK,
 	STR_HINT_TILT,
+	STR_HINT_TILEMAP,
 	STR_LOADING,
 	STR_CLEAR,
+	STR_NAME_GUIDE,     // 会話の話者名（デモ）
+	STR_GO,             // 選択肢
+	STR_CANCEL,
 	STR_CREDITS_BODY,
 	STR_COUNT
 } StringID;

@@ -9,6 +9,7 @@ typedef enum {
 	SCENE_STAGE_MOVE,    // 操作別ミニゲーム（十字キー）
 	SCENE_STAGE_CRANK,   // クランク
 	SCENE_STAGE_TILT,    // 加速度センサ（傾き）
+	SCENE_STAGE_TILEMAP, // タイルマップ迷路
 	SCENE_SETTINGS,
 	SCENE_CREDITS,
 	SCENE_DIALOGUE,

@@ -29,6 +29,7 @@ static void enter(Scene* self, void* arg)
 	self->state = s;
 	s_intro[0] = tr(STR_HINT_CRANK);
 	s_dlg.lines = s_intro; s_dlg.count = 1;
+	s_dlg.name = tr(STR_NAME_GUIDE);
 	scene_push(SCENE_DIALOGUE, &s_dlg);
 }
 

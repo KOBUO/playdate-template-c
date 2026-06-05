@@ -9,5 +9,6 @@ typedef enum {
 	SFX_COUNT
 } SfxId;
 
-void audio_init(void);        // main の init で1回
+void audio_init(void);        // main の init で1回（SE/BGM読込＋BGM再生開始）
 void audio_play(SfxId id);    // SE を鳴らす（消音時は無視）
+void audio_refresh(void);     // g_sound_on を BGM 音量に反映（設定変更時に呼ぶ）
