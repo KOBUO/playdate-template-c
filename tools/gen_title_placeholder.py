@@ -22,8 +22,8 @@ ref = Image.open(DEV).convert("L")
 lines = ref.point(lambda p: 0 if p < 120 else 255).filter(ImageFilter.MinFilter(3))
 bbox = ImageOps.invert(lines).getbbox()
 crop = lines.crop(bbox)
-# 表示枠に収める → 2値化（少し大きめ）
-max_w, max_h = 340, 168
+# 表示枠に収める → 2値化
+max_w, max_h = 300, 150
 s = min(max_w / crop.width, max_h / crop.height)
 dev = crop.resize((int(crop.width * s), int(crop.height * s)), Image.LANCZOS)
 dev = dev.point(lambda p: 0 if p < 175 else 255).convert("1")
@@ -47,14 +47,17 @@ tw = int(d.textlength(title, font=font))
 tscale = 3
 while tw * tscale > W - 20 and tscale > 1:
     tscale -= 1
-TY = 12
+TY = 16
 stamp(title, tscale, TY)
 title_h = 12 * tscale
 
-# デバイス：タイトルに少し重ねて配置。
+# デバイス：タイトル下に配置（ごく浅く重ねる）。下端〜Press A の間に収め、縦バランスを取る。
 # クランクが右へ出る分、本体が中央に見えるよう少し右に寄せる。
-dy = TY + title_h - 8                        # 8px ほどタイトルと重ねる
-dx = (W - dev.width) // 2 + int(dev.width * 0.04)
+bottom_limit = 206                           # この下は Press A 用に空ける
+dy = TY + title_h - 2                         # 2px だけ重ねる
+if dy + dev.height > bottom_limit:
+    dy = bottom_limit - dev.height
+dx = (W - dev.width) // 2 + int(dev.width * 0.06)
 im.paste(dev.convert("L"), (dx, dy))
 
 im.convert("1").save(OUT)
