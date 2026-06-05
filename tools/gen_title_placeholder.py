@@ -2,7 +2,7 @@
 """
 タイトル画像を生成して Source/images/title.png に置く。
 デバイス線画（assets/art/playdate-device.png・オリジナル画像）を1bit化して配置し、
-上に "GAME TEMPLATE" を載せる。「Press A」はコード側(scene_title)で点滅描画。
+上に "PLAYDATE TEMPLATE" を載せ、画像と少し重ねる。「Press A」はコード側で点滅描画。
 本番アートに差し替えるなら assets/art/playdate-device.png を置き換えて再実行。
   python3 tools/gen_title_placeholder.py
 """
@@ -22,8 +22,8 @@ ref = Image.open(DEV).convert("L")
 lines = ref.point(lambda p: 0 if p < 120 else 255).filter(ImageFilter.MinFilter(3))
 bbox = ImageOps.invert(lines).getbbox()
 crop = lines.crop(bbox)
-# 表示枠に収める → 2値化
-max_w, max_h = 300, 140
+# 表示枠に収める → 2値化（少し大きめ）
+max_w, max_h = 340, 168
 s = min(max_w / crop.width, max_h / crop.height)
 dev = crop.resize((int(crop.width * s), int(crop.height * s)), Image.LANCZOS)
 dev = dev.point(lambda p: 0 if p < 175 else 255).convert("1")
@@ -39,9 +39,23 @@ def stamp(text, scale, cy):
     ImageDraw.Draw(t).text((0, 0), text, font=font, fill=BLACK)
     t = t.point(lambda p: 0 if p < 128 else 255).resize((w * scale, 12 * scale), Image.NEAREST)
     im.paste(t, ((W - w * scale) // 2, cy))
+    return w * scale
 
-stamp("GAME TEMPLATE", 3, 16)
-im.paste(dev.convert("L"), ((W - dev.width) // 2, 64 + (140 - dev.height) // 2))
+# 大タイトル（幅に収まるよう自動縮小）
+title = "PLAYDATE TEMPLATE"
+tw = int(d.textlength(title, font=font))
+tscale = 3
+while tw * tscale > W - 20 and tscale > 1:
+    tscale -= 1
+TY = 12
+stamp(title, tscale, TY)
+title_h = 12 * tscale
+
+# デバイス：タイトルに少し重ねて配置。
+# クランクが右へ出る分、本体が中央に見えるよう少し右に寄せる。
+dy = TY + title_h - 8                        # 8px ほどタイトルと重ねる
+dx = (W - dev.width) // 2 + int(dev.width * 0.04)
+im.paste(dev.convert("L"), (dx, dy))
 
 im.convert("1").save(OUT)
-print("saved", OUT, "device", dev.size)
+print("saved", OUT, "device", dev.size, "title_scale", tscale)

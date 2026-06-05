@@ -44,7 +44,7 @@ static void draw(Scene* self)
 
 	img_draw(s->bg, 0, 0);              // 背景画像（全画面）
 	if (s->show_prompt)
-		draw_text_centered(tr(STR_PRESS_A), 218);
+		draw_text_centered(tr(STR_PRESS_A), 222);   // 横中央・下部
 }
 
 static void leave(Scene* self)
