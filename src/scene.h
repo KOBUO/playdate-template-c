@@ -14,6 +14,7 @@ typedef enum {
 	SCENE_DEMO_CRANK,
 	SCENE_DEMO_ACCEL,
 	SCENE_DEMO_SPRITE,
+	SCENE_DEMO_CRANKLOAD,
 	SCENE_COUNT   // 番兵（シーン総数）。常に末尾に置く
 } SceneID;
 

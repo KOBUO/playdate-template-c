@@ -14,4 +14,5 @@ Scene scene_demos(void);
 Scene scene_demo_crank(void);
 Scene scene_demo_accel(void);
 Scene scene_demo_sprite(void);
+Scene scene_demo_crankload(void);
 Scene scene_splash(void);
