@@ -23,7 +23,7 @@ lines = ref.point(lambda p: 0 if p < 120 else 255).filter(ImageFilter.MinFilter(
 bbox = ImageOps.invert(lines).getbbox()
 crop = lines.crop(bbox)
 # 表示枠に収める → 2値化
-max_w, max_h = 300, 150
+max_w, max_h = 300, 140
 s = min(max_w / crop.width, max_h / crop.height)
 dev = crop.resize((int(crop.width * s), int(crop.height * s)), Image.LANCZOS)
 dev = dev.point(lambda p: 0 if p < 175 else 255).convert("1")
@@ -33,32 +33,31 @@ im = Image.new("L", (W, H), 255)
 d  = ImageDraw.Draw(im)
 font = ImageFont.truetype(TTF, 12)
 
-def stamp(text, scale, cy):
+# 黒い線だけを重ねて貼る（白背景で下を消さない＝重なりが見える）
+def paste_black(layer, x, y):
+    mask = layer.point(lambda p: 255 if p < 128 else 0)   # 黒→不透明
+    im.paste(0, (x, y, x + layer.width, y + layer.height), mask)
+
+def render_text(text, scale):
     w = int(d.textlength(text, font=font))
     t = Image.new("L", (w, 12), 255)
     ImageDraw.Draw(t).text((0, 0), text, font=font, fill=BLACK)
-    t = t.point(lambda p: 0 if p < 128 else 255).resize((w * scale, 12 * scale), Image.NEAREST)
-    im.paste(t, ((W - w * scale) // 2, cy))
-    return w * scale
+    return t.point(lambda p: 0 if p < 128 else 255).resize((w * scale, 12 * scale), Image.NEAREST)
 
-# 大タイトル（幅に収まるよう自動縮小）
+# デバイスを先に配置（中央。クランク分だけ右へ寄せて本体を中央に見せる）
+dev_l = dev.convert("L")
+DDY = 64
+dx = (W - dev_l.width) // 2 + int(dev_l.width * 0.06)
+paste_black(dev_l, dx, DDY)
+
+# タイトルを下げて、デバイス上部（画面のあたり）に重ねる
 title = "PLAYDATE TEMPLATE"
 tw = int(d.textlength(title, font=font))
 tscale = 3
 while tw * tscale > W - 20 and tscale > 1:
     tscale -= 1
-TY = 16
-stamp(title, tscale, TY)
-title_h = 12 * tscale
-
-# デバイス：タイトル下に配置（ごく浅く重ねる）。下端〜Press A の間に収め、縦バランスを取る。
-# クランクが右へ出る分、本体が中央に見えるよう少し右に寄せる。
-bottom_limit = 206                           # この下は Press A 用に空ける
-dy = TY + title_h - 2                         # 2px だけ重ねる
-if dy + dev.height > bottom_limit:
-    dy = bottom_limit - dev.height
-dx = (W - dev.width) // 2 + int(dev.width * 0.06)
-im.paste(dev.convert("L"), (dx, dy))
+tl = render_text(title, tscale)
+paste_black(tl, (W - tl.width) // 2, 52)
 
 im.convert("1").save(OUT)
 print("saved", OUT, "device", dev.size, "title_scale", tscale)
