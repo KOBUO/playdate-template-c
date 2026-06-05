@@ -26,19 +26,16 @@ int eventHandler(PlaydateAPI* playdate, PDSystemEvent event, uint32_t arg)
 		pd->display->setRefreshRate(30);
 
 		// 全シーンを登録（新しい画面を足したらここにも1行）
+		scene_register(SCENE_SPLASH, scene_splash);
 		scene_register(SCENE_TITLE, scene_title);
 		scene_register(SCENE_STAGE_SELECT, scene_stage_select);
-		scene_register(SCENE_GAME,  scene_game);
-		scene_register(SCENE_PAUSE, scene_pause);
+		scene_register(SCENE_LOADING, scene_loading);
+		scene_register(SCENE_STAGE_MOVE, scene_stage_move);
+		scene_register(SCENE_STAGE_CRANK, scene_stage_crank);
+		scene_register(SCENE_STAGE_TILT, scene_stage_tilt);
 		scene_register(SCENE_SETTINGS, scene_settings);
 		scene_register(SCENE_CREDITS, scene_credits);
 		scene_register(SCENE_DIALOGUE, scene_dialogue);
-		scene_register(SCENE_DEMOS, scene_demos);
-		scene_register(SCENE_DEMO_CRANK, scene_demo_crank);
-		scene_register(SCENE_DEMO_ACCEL, scene_demo_accel);
-		scene_register(SCENE_DEMO_SPRITE, scene_demo_sprite);
-		scene_register(SCENE_DEMO_CRANKLOAD, scene_demo_crankload);
-		scene_register(SCENE_SPLASH, scene_splash);
 
 		// 最初に表示する画面：スプラッシュ（オープニング）→ タイトル
 		scene_switch(SCENE_SPLASH, NULL, TRANSITION_NONE);

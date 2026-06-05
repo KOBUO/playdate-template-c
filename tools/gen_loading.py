@@ -1,22 +1,21 @@
 #!/usr/bin/env python3
 """
-クランク・ロード用 imagetable を生成。
-入力: assets/art/pixel_loading/playdate_pixel_loading_sheet_48x48_8frames_1bit.png（384x48, 8コマ）
-出力: Source/images/crankload-table-48-48.png（Playdate imagetable 命名規則）
-孤立した黒点（生成ノイズ）があれば除去。
-  python3 tools/gen_crankload.py
+ローディング用 imagetable を生成。
+入力: assets/art/pixel_loading/playdate_pixel_loading_sheet_40x28_8frames_1bit.png（320x28, 8コマ）
+出力: Source/images/loading-table-40-28.png（Playdate imagetable 命名規則）
+孤立した黒点があれば除去。
+  python3 tools/gen_loading.py
 """
 import os
 from PIL import Image
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-SRC  = os.path.join(ROOT, "assets/art/pixel_loading/playdate_pixel_loading_sheet_48x48_8frames_1bit.png")
-OUT  = os.path.join(ROOT, "Source/images/crankload-table-48-48.png")
+SRC  = os.path.join(ROOT, "assets/art/pixel_loading/playdate_pixel_loading_sheet_40x28_8frames_1bit.png")
+OUT  = os.path.join(ROOT, "Source/images/loading-table-40-28.png")
 
 im = Image.open(SRC).convert("L")
 px = im.load()
 w, h = im.size
-
 removed = 0
 for y in range(h):
     for x in range(w):
@@ -32,6 +31,5 @@ for y in range(h):
             if neigh == 0:
                 px[x, y] = 255
                 removed += 1
-
 im.point(lambda p: 0 if p < 128 else 255).convert("1").save(OUT)
 print("saved", OUT, "removed", removed, "speckles")

@@ -59,7 +59,6 @@ static void build_menu(Scene* self)
 {
 	(void)self;
 	sysmenu_add_settings();
-	sysmenu_add_demos();
 	sysmenu_add_credits();
 }
 

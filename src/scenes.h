@@ -1,18 +1,20 @@
 #pragma once
 #include "scene.h"
 
-// 各シーンの生成関数。実体は scenes/ 以下の各ファイルにある。
-// 新しい画面を足すときは、ここに1行 + scene 1ファイル + main で register。
+// 各シーンの生成関数。実体は scenes/ 以下の各ファイル。
+Scene scene_splash(void);
 Scene scene_title(void);
 Scene scene_stage_select(void);
-Scene scene_game(void);
-Scene scene_pause(void);
+Scene scene_loading(void);
+Scene scene_stage_move(void);
+Scene scene_stage_crank(void);
+Scene scene_stage_tilt(void);
 Scene scene_settings(void);
 Scene scene_credits(void);
 Scene scene_dialogue(void);
-Scene scene_demos(void);
-Scene scene_demo_crank(void);
-Scene scene_demo_accel(void);
-Scene scene_demo_sprite(void);
-Scene scene_demo_crankload(void);
-Scene scene_splash(void);
+
+// ローディングへ渡す依頼：演出後に next シーンへ param を渡して遷移する。
+typedef struct {
+	SceneID next;
+	int     param;
+} LoadRequest;
