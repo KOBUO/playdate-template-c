@@ -27,7 +27,8 @@ Playdate 開発ガイド / テンプレートの未着手・保留タスク。
 
 ## Demos ハブに追加する章（開発ガイド用サンプル）
 
-- [ ] **スプライト＋アニメーション＋当たり判定**（imagetable / SDK sprite）← 次
+- [x] **スプライト＋アニメーション**（imagetable 歩行アニメ・向き反転）← Demos に追加
+- [ ] **当たり判定**（SDK sprite の collision、別デモで）
 - [ ] **オーディオ拡張**：BGM(fileplayer) + シンセ音、g_sound_on 連動
 - [ ] **タイマー/トゥイーン**（イージング）
 - [ ] **タイルマップ**簡易デモ
@@ -68,4 +69,6 @@ Playdate 開発ガイド / テンプレートの未着手・保留タスク。
 - [x] 会話ウィンドウ（scene_dialogue.c、UTF-8タイプライター+折返し、本編⊙の Talk(demo) から）
 - [x] 配布アセット（card.png 350x155 / launchImage.png、pdxinfo整備、tools/gen_launcher.py）
 - [x] git init + .gitignore（build/・*.pdx 除外）+ 初回コミット
-- [x] Demos ハブ（⊙メニューから）+ クランク/加速度センサ デモ
+- [x] Demos ハブ（⊙メニューから）+ クランク/加速度センサ/スプライト デモ
+- [x] スプラッシュ(オープニング)シーン：起動→タイトル、Aスキップ（動画.pdvは不採用＝軽量コード演出に）
+- [x] GitHub 公開（MIT、Panicアート除去、NOTICE/商標免責）→ KOBUO/playdate-template-c

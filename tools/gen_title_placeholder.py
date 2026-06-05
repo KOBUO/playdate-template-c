@@ -53,16 +53,19 @@ def draw_device(ox, oy):
         d.ellipse([bx-9, by-9, bx+9, by+9], outline=BLACK, width=2)
         lw = int(d.textlength(ch, font=font))
         d.text((bx - lw // 2, by - 6), ch, font=font, fill=BLACK)
-    # クランク：バー(腕/シャフト)と 掴むところ(握り) は別部品。
-    # それぞれ本体と同じ線画(白塗り+黒フチ)で描き、重ねて継ぎ目(関節)を見せる。
-    # 上ヒンジ → バー(細め) → 握り(太め) の順。
-    d.line([ox + bw - 1, oy + 27, ox + bw + 6, oy + 27], fill=BLACK, width=3)        # 上ヒンジ
-    # バー（腕）：細く短い角丸
-    d.rounded_rectangle([ox + bw + 5, oy + 22, ox + bw + 13, oy + 52],
-                        radius=3, fill=255, outline=BLACK, width=2)
-    # 握り（掴むところ）：太く長い角丸。バー下端に少し重ねて接合
-    d.rounded_rectangle([ox + bw + 8, oy + 48, ox + bw + 22, oy + 98],
-                        radius=6, fill=255, outline=BLACK, width=2)
+    # クランク：細いシャフト + 太い握り。継ぎ目の不具合を避けるため
+    # 「黒で塗る → 内側を白で抜く」で1本の綺麗な輪郭にする（内部に変な線が出ない）。
+    # 太さの段差でシャフトと握りが視覚的に分かれて見える。
+    xc = ox + bw + 12
+    d.line([ox + bw - 1, oy + 27, xc - 4, oy + 27], fill=BLACK, width=3)   # 上ヒンジ
+    sh = [xc - 4, oy + 22, xc + 4, oy + 54]      # シャフト(細)
+    gr = [xc - 8, oy + 48, xc + 8, oy + 98]      # 握り(太)
+    # 1) 黒シルエット
+    d.rounded_rectangle(sh, radius=3, fill=BLACK)
+    d.rounded_rectangle(gr, radius=7, fill=BLACK)
+    # 2) 内側を白で抜く（白同士を重ねて継ぎ目を消す）
+    d.rounded_rectangle([sh[0] + 2, sh[1] + 2, sh[2] - 2, sh[3] - 2], radius=2, fill=255)
+    d.rounded_rectangle([gr[0] + 2, gr[1] + 2, gr[2] - 2, gr[3] - 2], radius=5, fill=255)
 
 draw_device((W - 128) // 2 - 7, 80)   # クランク分すこし左寄せして中央に見せる
 
