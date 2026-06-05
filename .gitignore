@@ -10,3 +10,6 @@ Source/pdex.*
 # editor
 .vscode/
 .idea/
+
+# Claude Code local settings
+.claude/
