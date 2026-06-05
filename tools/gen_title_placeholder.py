@@ -46,7 +46,7 @@ def render_text(text, scale):
 
 # デバイスを先に配置（中央。クランク分だけ右へ寄せて本体を中央に見せる）
 dev_l = dev.convert("L")
-DDY = 64
+DDY = 42
 dx = (W - dev_l.width) // 2 + int(dev_l.width * 0.06)
 paste_black(dev_l, dx, DDY)
 
