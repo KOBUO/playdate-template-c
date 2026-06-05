@@ -11,7 +11,8 @@
 // 画像: Source/images/crankload-table-32-32.png（tools/gen_crankload.py で生成）
 
 #define FRAMES   8
-#define SCALE    3
+#define FRAME_PX 48
+#define SCALE    2
 #define FULL_DEG 720.0f   // 2回転で満タン
 
 typedef struct {
@@ -58,10 +59,10 @@ static void draw(Scene* self)
 
 	// 回転アニメ（拡大して中央に）
 	int frame = ((int)(s->accum / 30.0f)) % FRAMES;
-	int sz = 32 * SCALE;
+	int sz = FRAME_PX * SCALE;
 	LCDBitmap* bmp = s->table ? pd->graphics->getTableBitmap(s->table, frame) : NULL;
 	if (bmp)
-		pd->graphics->drawScaledBitmap(bmp, (SCREEN_WIDTH - sz) / 2, 60, SCALE, SCALE);
+		pd->graphics->drawScaledBitmap(bmp, (SCREEN_WIDTH - sz) / 2, 52, SCALE, SCALE);
 
 	// 進捗バー
 	int bx = 80, by = 175, bw = SCREEN_WIDTH - bx * 2, bh = 14;
