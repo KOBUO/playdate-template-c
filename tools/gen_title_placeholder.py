@@ -44,20 +44,23 @@ def render_text(text, scale):
     ImageDraw.Draw(t).text((0, 0), text, font=font, fill=BLACK)
     return t.point(lambda p: 0 if p < 128 else 255).resize((w * scale, 12 * scale), Image.NEAREST)
 
-# デバイスを先に配置（中央。クランク分だけ右へ寄せて本体を中央に見せる）
+# デバイスを配置。下部の「Aボタンを押してください」帯を除いた領域に対して縦中央。
+# （Press A はコード側が y=222 付近に描くので、その分を除く）
+PRESS_A_BAND = 32                       # 下部に空ける高さ
+content_h = H - PRESS_A_BAND            # この高さの中で縦中央にする
 dev_l = dev.convert("L")
-DDY = 42
-dx = (W - dev_l.width) // 2 + int(dev_l.width * 0.06)
+DDY = (content_h - dev_l.height) // 2
+dx = (W - dev_l.width) // 2 + int(dev_l.width * 0.06)   # クランク分だけ右へ寄せて中央に見せる
 paste_black(dev_l, dx, DDY)
 
-# タイトルを下げて、デバイス上部（画面のあたり）に重ねる
+# タイトルはデバイス上部（画面のあたり）に重ねる
 title = "PLAYDATE TEMPLATE"
 tw = int(d.textlength(title, font=font))
 tscale = 3
 while tw * tscale > W - 20 and tscale > 1:
     tscale -= 1
 tl = render_text(title, tscale)
-paste_black(tl, (W - tl.width) // 2, 52)
+paste_black(tl, (W - tl.width) // 2, DDY + 12)
 
 im.convert("1").save(OUT)
 print("saved", OUT, "device", dev.size, "title_scale", tscale)
