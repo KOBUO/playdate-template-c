@@ -38,6 +38,7 @@ static const char* TABLE[LANG_COUNT][STR_COUNT] = {
 		[STR_DEMOS]          = "DEMOS",
 		[STR_DEMO_CRANK]     = "Crank",
 		[STR_DEMO_ACCEL]     = "Accelerometer",
+		[STR_DEMO_SPRITE]    = "Sprite & Animation",
 	},
 	[LANG_JA] = {
 		[STR_PRESS_A]        = "Aボタンを押してください",
@@ -63,6 +64,7 @@ static const char* TABLE[LANG_COUNT][STR_COUNT] = {
 		[STR_DEMOS]          = "デモ",
 		[STR_DEMO_CRANK]     = "クランク",
 		[STR_DEMO_ACCEL]     = "加速度センサ",
+		[STR_DEMO_SPRITE]    = "スプライト/アニメ",
 	},
 };
 

@@ -21,7 +21,13 @@
       "Bash(python3 tools/gen_jp_font.py)",
       "Bash(python3 *)",
       "Bash([ -f \"$P\" ])",
-      "Read(//private/var/folders/97/250m9jln2ss9kmp5_1phq43m0000gn/T/TemporaryItems/NSIRD_screencaptureui_zltPHb/**)"
+      "Read(//private/var/folders/97/250m9jln2ss9kmp5_1phq43m0000gn/T/TemporaryItems/NSIRD_screencaptureui_zltPHb/**)",
+      "Bash(git rm *)",
+      "Bash(git commit *)",
+      "Bash(git merge *)",
+      "Bash(git push *)",
+      "Bash(git fetch *)",
+      "Bash(git ls-tree *)"
     ]
   }
 }

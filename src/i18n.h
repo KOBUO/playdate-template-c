@@ -34,6 +34,7 @@ typedef enum {
 	STR_DEMOS,
 	STR_DEMO_CRANK,
 	STR_DEMO_ACCEL,
+	STR_DEMO_SPRITE,
 	STR_COUNT
 } StringID;
 

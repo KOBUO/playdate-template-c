@@ -2,6 +2,7 @@
 
 // 画面の種類。新しい画面を足すときはここに ID を追加する。
 typedef enum {
+	SCENE_SPLASH,
 	SCENE_TITLE,
 	SCENE_STAGE_SELECT,
 	SCENE_GAME,
@@ -12,6 +13,7 @@ typedef enum {
 	SCENE_DEMOS,
 	SCENE_DEMO_CRANK,
 	SCENE_DEMO_ACCEL,
+	SCENE_DEMO_SPRITE,
 	SCENE_COUNT   // 番兵（シーン総数）。常に末尾に置く
 } SceneID;
 

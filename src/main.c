@@ -36,9 +36,11 @@ int eventHandler(PlaydateAPI* playdate, PDSystemEvent event, uint32_t arg)
 		scene_register(SCENE_DEMOS, scene_demos);
 		scene_register(SCENE_DEMO_CRANK, scene_demo_crank);
 		scene_register(SCENE_DEMO_ACCEL, scene_demo_accel);
+		scene_register(SCENE_DEMO_SPRITE, scene_demo_sprite);
+		scene_register(SCENE_SPLASH, scene_splash);
 
-		// 最初に表示する画面（初回は演出なし）
-		scene_switch(SCENE_TITLE, NULL, TRANSITION_NONE);
+		// 最初に表示する画面：スプラッシュ（オープニング）→ タイトル
+		scene_switch(SCENE_SPLASH, NULL, TRANSITION_NONE);
 
 		pd->system->setUpdateCallback(update, pd);
 	}

@@ -14,8 +14,9 @@ typedef struct {
 } DemoEntry;
 
 static const DemoEntry demos[] = {
-	{ STR_DEMO_CRANK, SCENE_DEMO_CRANK },
-	{ STR_DEMO_ACCEL, SCENE_DEMO_ACCEL },
+	{ STR_DEMO_CRANK,  SCENE_DEMO_CRANK },
+	{ STR_DEMO_ACCEL,  SCENE_DEMO_ACCEL },
+	{ STR_DEMO_SPRITE, SCENE_DEMO_SPRITE },
 };
 #define DEMO_COUNT ((int)(sizeof(demos) / sizeof(demos[0])))
 
