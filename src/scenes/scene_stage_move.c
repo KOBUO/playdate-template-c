@@ -26,10 +26,6 @@ typedef struct {
 	int stage;
 } St;
 
-static const char*    s_intro[1];
-static const char*    s_choices[2];
-static DialogueScript s_dlg;
-
 static void enter(Scene* self, void* arg)
 {
 	St* s = mem_alloc(sizeof(St));
@@ -39,13 +35,8 @@ static void enter(Scene* self, void* arg)
 	s->stage = ARG_TO_INT(arg);
 	self->state = s;
 	// 導入：名前ボックス＋選択肢つき会話（会話ウィンドウの全機能デモ）
-	s_intro[0]   = tr(STR_HINT_MOVE);
-	s_choices[0] = tr(STR_GO);
-	s_choices[1] = tr(STR_CANCEL);
-	s_dlg.lines = s_intro; s_dlg.count = 1;
-	s_dlg.name = tr(STR_NAME_GUIDE);
-	s_dlg.choices = s_choices; s_dlg.choice_count = 2;
-	scene_push(SCENE_DIALOGUE, &s_dlg);
+	const char* choices[] = { tr(STR_GO), tr(STR_CANCEL) };
+	dialogue_ask(tr(STR_NAME_GUIDE), tr(STR_HINT_MOVE), choices, 2);
 }
 
 // 導入会話が pop した時。Cancel(=1) ならステージ選択へ戻る。

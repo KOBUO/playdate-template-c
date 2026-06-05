@@ -19,18 +19,12 @@
 
 typedef struct { int won; float wt; int stage; } St;
 
-static const char*    s_intro[1];
-static DialogueScript s_dlg;
-
 static void enter(Scene* self, void* arg)
 {
 	St* s = mem_alloc(sizeof(St));
 	s->won = 0; s->wt = 0; s->stage = ARG_TO_INT(arg);
 	self->state = s;
-	s_intro[0] = tr(STR_HINT_CRANK);
-	s_dlg.lines = s_intro; s_dlg.count = 1;
-	s_dlg.name = tr(STR_NAME_GUIDE);
-	scene_push(SCENE_DIALOGUE, &s_dlg);
+	dialogue_say(tr(STR_NAME_GUIDE), tr(STR_HINT_CRANK));   // 導入：操作説明
 }
 
 static void update(Scene* self, float dt)

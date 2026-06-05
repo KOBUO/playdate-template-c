@@ -10,6 +10,12 @@ typedef struct {
 	int          choice_count;
 } DialogueScript;
 
+// --- 手軽な1行会話ヘルパー（定型の static を書かずに会話を出せる）---
+// name は話者名（NULL可）。内部で保持してから push するので、その場で呼べる。
+void dialogue_say(const char* name, const char* line);
+// 選択肢つき。選んだ index は呼び出し元シーンの resume(result) で受け取る。
+void dialogue_ask(const char* name, const char* line, const char** choices, int choice_count);
+
 // 選択結果は scene_pop の result で返る：
 //   選択肢ありなら INT_TO_ARG(選んだindex)、
 //   選択肢なし/キャンセル(B)なら NULL(=0)。

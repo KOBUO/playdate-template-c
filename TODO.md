@@ -37,6 +37,9 @@ Playdate 開発ガイド / テンプレートの未着手・保留タスク。
 - [x] **タイルマップ**ステージ（迷路・グリッド移動）
 - [x] **会話ウィンドウ拡張**：名前ボックス + 選択肢（Moveステージで実演）
 - [ ] （任意）立ち絵対応・長文の複数ページ送り
+- [x] リファクタ：会話ヘルパー(dialogue_say/ask)で各ステージの定型static撤去
+- [x] プロジェクト名を gametemplate に統一（pdx/CMake/run.sh/README）
+- [x] run.sh（build+pdc+再起動）でアセット反映漏れを防止／README最新化
 - [ ] （任意）再利用リストUI部品（stage select / settings の共通化）
 - [ ] （任意）シンセ音（PDSynth）デモ
 - [ ] 実機ビルド（ARM toolchain 導入）/ ランチャー本番アート / 翻訳見直し

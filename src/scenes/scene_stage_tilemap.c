@@ -35,9 +35,6 @@ typedef struct {
 	int stage;
 } St;
 
-static const char*    s_intro[1];
-static DialogueScript s_dlg;
-
 static char tile_at(int c, int r)
 {
 	if (c < 0 || c >= COLS || r < 0 || r >= ROWS) return '#';
@@ -56,10 +53,7 @@ static void enter(Scene* self, void* arg)
 		for (int c = 0; c < COLS; c++)
 			if (MAP[r][c] == 'S') { s->cx = c; s->cy = r; }
 	self->state = s;
-	s_intro[0] = tr(STR_HINT_TILEMAP);
-	s_dlg.lines = s_intro; s_dlg.count = 1;
-	s_dlg.name = tr(STR_NAME_GUIDE);
-	scene_push(SCENE_DIALOGUE, &s_dlg);
+	dialogue_say(tr(STR_NAME_GUIDE), tr(STR_HINT_TILEMAP));   // 導入：操作説明
 }
 
 static void try_move(St* s, int dc, int dr)

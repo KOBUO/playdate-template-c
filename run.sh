@@ -13,9 +13,9 @@ export PLAYDATE_SDK_PATH="${PLAYDATE_SDK_PATH:-$HOME/Developer/PlaydateSDK}"
 
 cmake -B build -S . >/dev/null
 cmake --build build
-"$PLAYDATE_SDK_PATH/bin/pdc" -sdkpath "$PLAYDATE_SDK_PATH" Source myfirstgame.pdx
+"$PLAYDATE_SDK_PATH/bin/pdc" -sdkpath "$PLAYDATE_SDK_PATH" Source gametemplate.pdx
 
 killall "Playdate Simulator" 2>/dev/null || true
 sleep 1
-open -a "$PLAYDATE_SDK_PATH/bin/Playdate Simulator.app" myfirstgame.pdx
-echo "launched myfirstgame.pdx"
+open -a "$PLAYDATE_SDK_PATH/bin/Playdate Simulator.app" gametemplate.pdx
+echo "launched gametemplate.pdx"

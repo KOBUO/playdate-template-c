@@ -26,8 +26,8 @@ if (NOT CMAKE_BUILD_TYPE)
 endif()
 
 # ゲーム名
-set(PLAYDATE_GAME_NAME myfirstgame)
-set(PLAYDATE_GAME_DEVICE myfirstgame_DEVICE)
+set(PLAYDATE_GAME_NAME gametemplate)
+set(PLAYDATE_GAME_DEVICE gametemplate_DEVICE)
 
 project(${PLAYDATE_GAME_NAME} C ASM)
 

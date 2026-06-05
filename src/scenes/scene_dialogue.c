@@ -215,3 +215,30 @@ Scene scene_dialogue(void)
 		.leave = leave, .draw_below = 1,
 	};
 }
+
+// --- 手軽な1行会話ヘルパー ---
+// 同時に出る会話は常に1つなので、内部 static に保持して push する。
+// 呼び出し側に static を書かせない（次フレームの enter でコピーされる）。
+#define DLG_MAX_CHOICES 4
+static const char*    g_line[1];
+static const char*    g_choices[DLG_MAX_CHOICES];
+static DialogueScript g_sc;
+
+void dialogue_say(const char* name, const char* line)
+{
+	g_line[0] = line;
+	memset(&g_sc, 0, sizeof(g_sc));
+	g_sc.lines = g_line; g_sc.count = 1; g_sc.name = name;
+	scene_push(SCENE_DIALOGUE, &g_sc);
+}
+
+void dialogue_ask(const char* name, const char* line, const char** choices, int choice_count)
+{
+	g_line[0] = line;
+	if (choice_count > DLG_MAX_CHOICES) choice_count = DLG_MAX_CHOICES;
+	for (int i = 0; i < choice_count; i++) g_choices[i] = choices[i];
+	memset(&g_sc, 0, sizeof(g_sc));
+	g_sc.lines = g_line; g_sc.count = 1; g_sc.name = name;
+	g_sc.choices = g_choices; g_sc.choice_count = choice_count;
+	scene_push(SCENE_DIALOGUE, &g_sc);
+}
